@@ -1,0 +1,11 @@
+BINDIR := $(CURDIR)/bin
+BINNAME_SERVER := server
+BINNAME_CLIENT := client
+SRC_SERVER := $(CURDIR)/src/udp_datagrams/server/main.go
+SRC_CLIENT := $(CURDIR)/src/udp_datagrams/client/main.go
+
+.PHONY: build
+build_server: $(BINDIR)/$(BINNAME_SERVER)
+
+$(BINDIR)/$(BINNAME): $(SRC_SERVER)
+	go build -o $(BINDIR)/$(BINNAME_SERVER) ./src/udp_datagrams/server
