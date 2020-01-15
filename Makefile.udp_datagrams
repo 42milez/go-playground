@@ -1,11 +1,22 @@
-BINDIR := $(CURDIR)/bin
-BINNAME_SERVER := server
-BINNAME_CLIENT := client
+BINDIR         := $(CURDIR)/bin
+BINNAME_SERVER := udp_datagrams_server
+BINNAME_CLIENT := udp_datagrams_client
+
 SRC_SERVER := $(CURDIR)/src/udp_datagrams/server/main.go
 SRC_CLIENT := $(CURDIR)/src/udp_datagrams/client/main.go
 
-.PHONY: build
+GOFLAGS :=
+LDFLAGS := -w -s
+TAGS    :=
+
+.PHONY: build_server
 build_server: $(BINDIR)/$(BINNAME_SERVER)
 
-$(BINDIR)/$(BINNAME): $(SRC_SERVER)
-	go build -o $(BINDIR)/$(BINNAME_SERVER) ./src/udp_datagrams/server
+$(BINDIR)/$(BINNAME_SERVER): $(SRC_SERVER)
+	go build $(GOFLAGS) -tags '$(TAGS)' -ldflags '$(LDFLAGS)' -o $(BINDIR)/$(BINNAME_SERVER) ./src/udp_datagrams/server
+
+.PHONY: build_client
+build_client: $(BINDIR)/$(BINNAME_CLIENT)
+
+$(BINDIR)/$(BINNAME_CLIENT): $(SRC_CLIENT)
+	go build $(GOFLAGS) -tags '$(TAGS)' -ldflags '$(LDFLAGS)' -o $(BINDIR)/$(BINNAME_CLIENT) ./src/udp_datagrams/client
